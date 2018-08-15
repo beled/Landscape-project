@@ -71,7 +71,7 @@ for (z in 1:50) {   #Allow me to create various random disposition
     comp <- c()
     for (i in 1:nf) {
       vf <- c(vf, sum(ver==i))
-      if (abs(af[i]-vf[i])<=2) {
+      if (abs(af[i]-vf[i])/af[i]<=0.005) {  #Uncertainty is 0.5%
         comp[i]<-1
       } else {
         comp[i]<-0
@@ -87,7 +87,7 @@ for (z in 1:50) {   #Allow me to create various random disposition
   
   #------------------------------------------
   #Change Name to change the directory and names of files created by this program
-  Name = paste('C:/Users/Benjamin/Documents/R/R landscape project/Landscape project/Equal_patch_D288/equal_patch_D', tm, '_',Seed,'_n60', sep='')
+  Name = paste('C:/Users/Benjamin/Documents/R/R landscape project/Landscape project Ben/Equal_patch_D', tm, '/equal_patch_D', tm, '_',Seed,'_n60', sep='')
   #Write a file containing the final matrix
   write.table(ver, paste(Name, '.txt',sep = ''), row.names=FALSE, col.names = FALSE, sep=", ",qmethod="double")
 }

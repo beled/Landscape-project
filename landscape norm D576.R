@@ -1,4 +1,4 @@
-.libPaths("/home/beled/R/x86_64-pc-linux-gnu-library/3.5")
+#.libPaths("/home/beled/R/x86_64-pc-linux-gnu-library/3.5")
 library(sp)
 library(pracma)
 library(stats)
@@ -12,7 +12,7 @@ library(landscapeR)
 #       Af should remain the same between each disposition
 #       Change Name to change the directory and names of files created by this program
 
-#Generate N patches with a normal distribution
+#Generate nf patches with a normal distribution
 
 #Set seed
 for (z in 1:50) {   #Allow me to create various random disposition 
@@ -92,26 +92,26 @@ for (z in 1:50) {   #Allow me to create various random disposition
     comp <- c()
     for (i in 1:nf) {
       vf <- c(vf, sum(ver==i))
-      if (abs(af[i]-vf[i])<=2) {  
+      if (abs(af[i]-vf[i])/af[i]<=0.005) {  #Uncertainty is 0.5%
         comp[i]<-1
       } else {
         comp[i]<-0
       }
     }
     if (sum(comp)==length(comp)) {
-      #print("Les données sont vérifiées")
+      print("Les données sont vérifiées")
       verify_af <- 1
     } else {
-      #print("Les donnees ne sont pas verifies")
+      print("Les donnees ne sont pas verifies")
     }
   }
   
   #------------------------------------
   #Change Name to change the directory and names of files created by this program
-  Name <- paste('/project/6004956/beled/Norm_patch_D', tm, '/norm_patch_D',tm,'_',Seed,sep='')
+  Name <- paste('C:/Users/Benjamin/Documents/R/R landscape project/Landscape project Ben/Norm_patch_D', tm, '/norm_patch_D',tm,'_',Seed,sep='')
   #Display the result in a histogram
   png(filename = paste(Name,'.png', sep = ''))  #Open a png file
-  
+  #Create the histogram
   h<-hist(af, freq = TRUE, breaks = seq(0,8000,400), 
           main = 'Distribution normale du territoire', xlab = 'Taille', 
           ylab = 'Nombre de territoires', xlim = c(0, 8000), ylim = c(0, 8), col = 'grey')
@@ -120,7 +120,7 @@ for (z in 1:50) {   #Allow me to create various random disposition
   yfit <- dnorm(xfit, mean = mean(af), sd = sd(af))     
   yfit <- yfit * diff(h$mids[1:2]) * length(af) 
   lines(xfit, yfit, col = "black", lwd = 2)
-  box() #fait une boite autour du graph
+  box() 
   dev.off()
   
   #Save the final matrix
